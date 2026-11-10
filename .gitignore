@@ -1,0 +1,10 @@
+node_modules/
+.next/
+next-env.d.ts
+tsconfig.tsbuildinfo
+.env*
+!.env.example
+/vllm-env/
+/.figma.zip
+supabase/.temp/
+supabase/.branches/

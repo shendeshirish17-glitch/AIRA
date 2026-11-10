@@ -1,0 +1,213 @@
+/* AIRa scoped styles. Layout-level styles.css stays untouched; everything here
+   is keyed off .aira-root so other routes keep the template look. */
+
+html:has(.aira-root),
+body:has(.aira-root) {
+  background: #000;
+  overscroll-behavior: none;
+}
+
+.aira-root {
+  --aira-dim: rgba(255, 255, 255, 0.5);
+  --aira-faint: rgba(255, 255, 255, 0.2);
+  --aira-line: rgba(255, 255, 255, 0.1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family:
+    var(--font-aira-mono), var(--font-aira-deva), var(--font-aira-tamil), ui-monospace, Menlo, monospace;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.aira-root input,
+.aira-root .aira-selectable {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.aira-root :focus-visible {
+  outline: 1.5px solid hsl(var(--aira-hue, 28) 95% 70%);
+  outline-offset: 3px;
+}
+
+.aira-hue-text {
+  color: hsl(var(--aira-hue, 28) 95% 72%);
+}
+
+.aira-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+.aira-glass {
+  background: rgba(6, 6, 8, 0.72);
+  border: 1px solid var(--aira-line);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+.aira-blink {
+  animation: aira-blink 1.6s ease-in-out infinite;
+}
+.aira-breathe {
+  animation: aira-breathe 3s ease-in-out infinite;
+}
+.aira-fade-in {
+  animation: aira-fade-in 0.4s ease-out both;
+}
+.aira-slide-up {
+  animation: aira-slide-up 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.aira-spin {
+  animation: aira-spin 1s linear infinite;
+}
+.aira-flash {
+  animation: aira-flash 0.6s ease-out both;
+}
+
+/* Mic button rings react to phase via data attributes. */
+.aira-mic-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--aira-hue, 28) 95% 65% / 0.55);
+  opacity: 0;
+  pointer-events: none;
+}
+.aira-mic[data-phase='capturing'] .aira-mic-ring {
+  animation: aira-ring 1.4s ease-out infinite;
+}
+.aira-mic[data-phase='listening'] .aira-mic-ring {
+  opacity: 0.6;
+  animation: aira-breathe 3s ease-in-out infinite;
+}
+
+/* Scrubber: 2px track, 24px hit target. */
+.aira-scrub {
+  position: relative;
+  height: 24px;
+  cursor: pointer;
+  touch-action: none;
+}
+.aira-scrub::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  transition: height 0.15s;
+}
+.aira-scrub:hover::before,
+.aira-scrub[data-active='true']::before {
+  height: 4px;
+}
+.aira-scrub-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px hsl(var(--aira-hue, 28) 100% 65% / 0.8);
+  transition: height 0.15s;
+}
+.aira-scrub:hover .aira-scrub-fill,
+.aira-scrub[data-active='true'] .aira-scrub-fill {
+  height: 4px;
+}
+.aira-scrub-knob {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 9999px;
+  background: #fff;
+  transform: translateY(-50%) scale(0);
+  transition: transform 0.15s;
+}
+.aira-scrub:hover .aira-scrub-knob,
+.aira-scrub[data-active='true'] .aira-scrub-knob,
+.aira-scrub:focus-visible .aira-scrub-knob {
+  transform: translateY(-50%) scale(1);
+}
+
+@keyframes aira-blink {
+  50% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+}
+@keyframes aira-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes aira-slide-up {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes aira-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes aira-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes aira-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+@keyframes aira-flash {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aira-root *,
+  .aira-root *::before,
+  .aira-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
