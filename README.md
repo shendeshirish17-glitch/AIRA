@@ -42,29 +42,3 @@ AIRa is powered by **Gnani.ai**'s specialized voice stack designed for Indian sp
 
 ---
 
-## ⚡ Quick Start (Local Setup)
-
-### 1. Clone & Install
-```bash
-git clone https://github.com/your-username/aira-radio.git
-cd aira-radio
-npm install
-```
-
-### 2. Set Up Environment Variables
-Create a `.env.local` file in your root folder:
-```env
-NEXT_PUBLIC_AIRA_PIPELINE_URL=http://127.0.0.1:54321/functions/v1/aira-pipeline
-YOUTUBE_API_KEY=your_youtube_api_key_here
-GNANI_PRISMA_API_KEY=your_prisma_key_here
-GNANI_TIMBRE_API_KEY=your_timbre_key_here
-```
-
-### 3. Launch Development Server
-```bash
-npm run dev
-```
-Open `http://localhost:3000` (or `http://localhost:5173`) in your browser to tune in!
-
----
-
